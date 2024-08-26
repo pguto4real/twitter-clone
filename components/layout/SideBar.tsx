@@ -46,11 +46,8 @@ export default function SideBar() {
               icon={item.icon}
             />
           ))}
-          <SideBarItem
-          label="Logout"
-          icon={BiLogOut}
-          />
-          <SidebarTweetButton/>
+          <SideBarItem label="Logout" icon={BiLogOut} />
+          <SidebarTweetButton />
         </div>
       </div>
     </div>
