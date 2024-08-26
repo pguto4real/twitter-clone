@@ -3,28 +3,45 @@ import React, { useCallback, useState } from "react";
 import Input from "../Input";
 import { Modal } from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-
+  const [errorMessage, setErrorMessage] = useState("null");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+      const registerData = await axios.post("/api/register", {
+        email,
+        name,
+        username,
+        password,
+      });
+      toast.success("Account created");
 
+      signIn("credentials", {
+        email,
+        password,
+        
+      })
       registerModal.onClose();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.response.data.error);
+      setErrorMessage(error.response.data.error);
+      console.error(error.response.data.error);
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal]);
+  }, [registerModal, email, name, username, password]);
   const onToggle = useCallback(() => {
     if (isLoading) {
       return;
@@ -58,6 +75,7 @@ const RegisterModal = () => {
         onChange={(e) => setpassword(e.target.value)}
         value={password}
         disabled={isLoading}
+        type="password"
       />
     </div>
   );

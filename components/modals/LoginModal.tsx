@@ -4,6 +4,8 @@ import Input from "../Input";
 import { Modal } from "../Modal";
 import { register } from "module";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
@@ -13,17 +15,21 @@ const LoginModal = () => {
   const [password, setpassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-
+      await signIn("credentials", {
+        email,
+        password,
+      });
+      toast.success("Login Succesfull");
       loginModal.onClose();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal]);
+  }, [loginModal, email, password]);
 
   const onToggle = useCallback(() => {
     if (isLoading) {
@@ -48,6 +54,7 @@ const LoginModal = () => {
         onChange={(e) => setpassword(e.target.value)}
         value={password}
         disabled={isLoading}
+        type="password"
       />
     </div>
   );
@@ -56,7 +63,10 @@ const LoginModal = () => {
     <div className="text-neutral-400 text-center mt-4">
       <p>
         First time using Twitter?
-        <span className="text-white cursor-pointer hover:underline"  onClick={onToggle}>
+        <span
+          className="text-white cursor-pointer hover:underline"
+          onClick={onToggle}
+        >
           {" "}
           Create an account
         </span>

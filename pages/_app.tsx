@@ -3,11 +3,14 @@ import LoginModal from "@/components/modals/LoginModal";
 import RegisterModal from "@/components/modals/RegisterModal";
 
 import "@/styles/globals.css";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <SessionProvider session={pageProps.session}>
+      <Toaster />
     {/* <Modal  title="Test Modal" actionLabel="Submit"/> */}
     <LoginModal/>
     <RegisterModal/>
@@ -15,6 +18,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </SessionProvider>
   );
 }
