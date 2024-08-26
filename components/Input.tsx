@@ -22,6 +22,7 @@ const Input: React.FC<InputProps> = ({
         disabled:opacity-70
         disabled:cursor-not-allowed
        "
+       value={value}
     />
   );
 };

@@ -9,9 +9,9 @@ import { ClipLoader } from "react-spinners";
 export const UserView = () => {
   const router = useRouter();
   const { userId } = router.query;
-  console.log(userId);
+
   const { data:fetchedUser,isLoading } = useUser(userId as string)
-  console.log(fetchedUser)
+
 
   if(isLoading || !fetchedUser){
     return (

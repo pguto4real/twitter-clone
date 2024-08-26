@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
 
         const { userId } = req.query
-        console.log('userid', userId)
+        
 
         if (!userId || typeof userId !== 'string') {
             throw new Error("Invalid ID")
