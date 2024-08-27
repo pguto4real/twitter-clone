@@ -28,10 +28,10 @@ export const SideBarItem: React.FC<SidebarItemProps> = ({
     }
     
     if (!currentUser && auth) {
-      console.log('i got')
+
       loginModal.onOpen()
     } else if (href) {
-      console.log('i got 1')
+    
       router.push(href);
     }
   }, [onClick, router, href,auth,loginModal]);

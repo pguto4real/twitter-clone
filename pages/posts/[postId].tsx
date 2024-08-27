@@ -17,10 +17,10 @@ export const PostView = () => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { postId } = router.query;
-  // console.log(postId)
+ 
 
   const { data: fetchedPost, isLoading } = usePost(postId as string);
-  console.log(fetchedPost);
+
 
   if (isLoading || !fetchedPost) {
     return (

@@ -9,9 +9,6 @@ interface CommentItemProps {
 }
 export const CommentItem: React.FC<CommentItemProps> = ({ data }) => {
   const router = useRouter();
-  // const loginModal = useLoginModal();
-  // const { data: currentUser } = useCurrentUser();
-  // const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
   const goToUser = useCallback(
     (event: any) => {
       event.stopPropagation();
