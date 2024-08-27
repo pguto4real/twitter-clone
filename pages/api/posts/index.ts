@@ -11,13 +11,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-
+        
         if(req.method === 'POST'){
-            const { userId,body } = req.body
+            const { currentUser,body } = req.body
+            if (!currentUser) {
+                throw new Error('Not Signed inn')
+            } 
             const post = await prisma.post.create({
                 data:{
                  body,
-                 userId
+                 userId:currentUser.id
                 }
              })
              return res.status(200).json(post)

@@ -26,8 +26,7 @@ export const SideBarItem: React.FC<SidebarItemProps> = ({
     if (onClick) {
       return onClick();
     }
-    console.log('currentUser',auth)
-    console.log('currentUser',currentUser)
+    
     if (!currentUser && auth) {
       console.log('i got')
       loginModal.onOpen()
