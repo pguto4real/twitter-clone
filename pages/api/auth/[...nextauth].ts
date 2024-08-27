@@ -32,7 +32,7 @@ export default NextAuth({
                         email: credentials.email
                     }
                 })
-                console.log(user)
+            
                 if (!user || !user.hashedPassword) {
                     throw new Error("Invalid Credentials")
                 }
