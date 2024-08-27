@@ -21,7 +21,7 @@ export const Form: React.FC<FormProps> = ({
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutatePosts } = usePosts(currentUser?.id);
+  const { mutate: mutatePosts } = usePosts(postId as string);
 
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,9 +30,9 @@ export const Form: React.FC<FormProps> = ({
     try {
       setIsLoading(true);
       await axios.post("/api/posts", { userId: currentUser?.id, body });
-      setBody("");
+     
       toast.success("Tweet Created");
-      
+      setBody("");
       mutatePosts();
     } catch (error) {
       console.log("error", error);

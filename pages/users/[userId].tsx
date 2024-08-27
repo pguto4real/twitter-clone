@@ -1,6 +1,8 @@
 import { Header } from "@/components/Header";
-import { UserBio } from "@/components/UserBio";
-import { UserHero } from "@/components/UserHero";
+import { PostFeed } from "@/components/PostFeed";
+import { UserBio } from "@/components/users/UserBio";
+import { UserHero } from "@/components/users/UserHero";
+
 import useUser from "@/hooks/useUser";
 import { useRouter } from "next/router";
 import React from "react";
@@ -26,7 +28,7 @@ export const UserView = () => {
       <Header label={fetchedUser?.name} showBackArror />
       <UserHero userId={userId as string}/>
       <UserBio userId={userId as string}/>
-
+      <PostFeed userId={userId as string}/>
     </>
   );
 };
