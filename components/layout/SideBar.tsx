@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsHouseFill, BsBellFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import SideBarLogo from "./SideBarLogo";
@@ -7,9 +7,11 @@ import { BiLogOut } from "react-icons/bi";
 import SidebarTweetButton from "./SidebarTweetButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
+import { ClipLoader } from "react-spinners";
 
 export default function SideBar() {
   const { data: currentUser } = useCurrentUser();
+  // console.log('isLoading'+isLoading+'\ncurrentUser'+currentUser)
  
   const items = [
     {
@@ -31,6 +33,7 @@ export default function SideBar() {
       auth:true
     },
   ];
+
   return (
     <div
       className="

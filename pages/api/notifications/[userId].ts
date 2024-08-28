@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
 
         const { userId } = req.query;
-        console.log('userId', userId)
+ 
         if (!userId || typeof userId !== 'string') {
             throw new Error("Invalid ID")
         }
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 createdAt: 'desc'
             }
         })
-        console.log('i got here1')
+  
         await prisma.user.update({
             where: {
                 id: userId

@@ -1,5 +1,6 @@
 
 import useCurrentUser from "./useCurrentUser"
+
 import useUser from "./useUser"
 import useLoginModal from "./useLoginModal"
 import { useCallback, useMemo } from "react"
@@ -7,13 +8,31 @@ import toast from "react-hot-toast"
 import axios from "axios"
 import usePost from "./usePost"
 import usePosts from "./usePosts"
+import { useRouter } from "next/router"
 
 
 const useLike = ({ postId, userId }: { postId: string, userId?: string }) => {
+    const router = useRouter();
+    const { data: currentUser,mutate:mutateCurrentUser } = useCurrentUser()
+    let fetchedPost;
+    let mutatePost;
+    let mutatePosts;
+    if (router.pathname === '/') {
+        const { mutate: mutatePostings } = usePosts();
+        const { data: fetchedPosting, mutate: mutatePosting } = usePost(postId as string);
+        fetchedPost = fetchedPosting
+        mutatePost = mutatePosting
+        mutatePosts = mutatePostings
+    }
+    else {
+        const { data: fetchedPosting, mutate: mutatePosting } = usePost(postId)
+        const { mutate: mutatePostings } = usePosts(userId)
+        fetchedPost = fetchedPosting
+        mutatePost = mutatePosting
+        mutatePosts = mutatePostings
+    }
 
-    const { data: currentUser, } = useCurrentUser()
-    const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId)
-    const { mutate: mutateFetchedPosts } = usePosts(userId)
+
 
     const loginModal = useLoginModal()
     const hasLiked = useMemo(() => {
@@ -36,16 +55,18 @@ const useLike = ({ postId, userId }: { postId: string, userId?: string }) => {
             }
             await request()
 
-            mutateFetchedPost()
-            mutateFetchedPosts()
+
             toast.success('Success')
+            mutatePost()
+            mutatePosts()
+            mutateCurrentUser()
         } catch (error) {
             toast.error("Something went wrong")
         }
 
 
 
-    }, [currentUser, mutateFetchedPost, mutateFetchedPosts, hasLiked, postId, loginModal]);
+    }, [currentUser, mutatePost, mutatePosts, hasLiked, postId, loginModal]);
 
 
 

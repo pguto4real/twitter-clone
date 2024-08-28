@@ -21,7 +21,7 @@ export const Form: React.FC<FormProps> = ({
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
 
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser,mutate:mutateCurrentUser } = useCurrentUser();
   const {mutate: mutatePosts } = usePosts();
   const {mutate: mutatePost } = usePost(postId as string);
 
@@ -40,6 +40,7 @@ export const Form: React.FC<FormProps> = ({
       setBody("");
       mutatePosts();
       mutatePost()
+      mutateCurrentUser()
     } catch (error) {
       console.log("error", error);
       toast.error("Something went wrong");

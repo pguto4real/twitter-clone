@@ -10,6 +10,7 @@ import axios from "axios"
 const useFollow = (userId: string) => {
 
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser()
+    console.log(currentUser)
     const { mutate: mutateFetchedUser } = useUser(userId)
 
     const loginModal = useLoginModal()

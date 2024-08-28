@@ -2,15 +2,24 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useNotifications from "@/hooks/useNotifications";
 import React, { useEffect } from "react";
 import { BsTwitter } from "react-icons/bs";
+import { ClipLoader } from "react-spinners";
 
 const NotificationsFeed = () => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-  const { data: fetchedNotifications = [] } = useNotifications(currentUser?.id);
+  const { data: fetchedNotifications = [],isLoading } = useNotifications(currentUser?.id);
 
-  useEffect(() => {
-    mutateCurrentUser();
-  }, [mutateCurrentUser]);
+useEffect(()=>{
 
+  mutateCurrentUser()
+
+},[mutateCurrentUser])
+  if (isLoading ) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <ClipLoader color="lightblue" size={80} />
+      </div>
+    );
+  }
   if (fetchedNotifications.length === 0) {
     return (
       <div className="text-stone-600 text-center p-6 text-xl">

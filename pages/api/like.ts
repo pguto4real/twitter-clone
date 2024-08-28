@@ -9,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
+        
         const { postId, currentUser } = req.body
         if (!postId || typeof postId !== 'string') {
             throw new Error('Invalid ID')
